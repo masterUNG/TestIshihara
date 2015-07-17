@@ -3,6 +3,7 @@ package appewtc.masterung.testishihara;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup choiceRadioGroup;
     private RadioButton choice1RadioButton, choice2RadioButton, choice3RadioButton, choice4RadioButton;
     private Button answerButton;
+    private int radioAnInt, indexAnInt, scoreAnInt;
+    private MyValue objMyValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,39 @@ public class MainActivity extends AppCompatActivity {
         //Create Button Controller
         buttonController();
 
+        //Create Radio Controller
+        radioController();
+
     }   // onCreate
+
+    private void radioController() {
+        choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                soundEffect(R.raw.effect_btn_shut);
+
+                switch (i) {
+                    case R.id.radioButton:
+                        radioAnInt = 1;
+                        break;
+                    case R.id.radioButton2:
+                        radioAnInt = 2;
+                        break;
+                    case R.id.radioButton3:
+                        radioAnInt = 3;
+                        break;
+                    case R.id.radioButton4:
+                        radioAnInt = 4;
+                        break;
+                    default:
+                        radioAnInt = 0;
+                        break;
+                }
+
+            }   // event
+        });
+    }
 
     private void buttonController() {
         answerButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
 
                 //Sound Effect
                 soundEffect(R.raw.effect_btn_long);
+
+                //Sent Value to MyValue
+                indexAnInt += 1;
+                objMyValue = new MyValue(indexAnInt);
+
+                Log.d("test", "Question ==> " + objMyValue.qurstionIshihara());
 
             }   //event
         });
