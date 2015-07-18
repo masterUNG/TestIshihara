@@ -1,5 +1,6 @@
 package appewtc.masterung.testishihara;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -83,10 +84,16 @@ public class MainActivity extends AppCompatActivity {
                 if (radioAnInt == 0) {
                     Toast.makeText(MainActivity.this, "Please Choose Answer", Toast.LENGTH_SHORT).show();
                 } else {
+                    //Check Times
                     if (indexAnInt == 9) {
                         //Intent to ShowScore
-
+                        Intent objIntent = new Intent(MainActivity.this, ShowScoreActivity.class);
+                        objIntent.putExtra("Score", scoreAnInt);
+                        startActivity(objIntent);
+                        finish();
                     } else {
+                        //Check Score
+                        checkScore();
                         //Increase indexAtInt
                         indexAnInt += 1;
                         //Sent Value indexAtInt to MyValue
@@ -99,6 +106,14 @@ public class MainActivity extends AppCompatActivity {
             }   //event
         });
     }
+
+    private void checkScore() {
+        int[] intTrueAnswer = {1, 2, 3, 1, 2, 3, 1, 2, 4, 4};
+        if (radioAnInt == intTrueAnswer[indexAnInt]) {
+            scoreAnInt += 1;
+        }
+        choiceRadioGroup.clearCheck();
+    }   // checkScore
 
     private void changeView() {
 
