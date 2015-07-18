@@ -1,9 +1,8 @@
 package appewtc.masterung.testishihara;
 
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static appewtc.masterung.testishihara.R.id.radioButton4;
 
@@ -79,15 +79,46 @@ public class MainActivity extends AppCompatActivity {
                 //Sound Effect
                 soundEffect(R.raw.effect_btn_long);
 
-                //Sent Value to MyValue
-                indexAnInt += 1;
-                objMyValue = new MyValue(indexAnInt);
+                //Check Zero
+                if (radioAnInt == 0) {
+                    Toast.makeText(MainActivity.this, "Please Choose Answer", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (indexAnInt == 9) {
+                        //Intent to ShowScore
 
-                Log.d("test", "Question ==> " + objMyValue.qurstionIshihara());
+                    } else {
+                        //Increase indexAtInt
+                        indexAnInt += 1;
+                        //Sent Value indexAtInt to MyValue
+                        objMyValue = new MyValue(indexAnInt);
+                        //Receive Valur form MyView to Change View
+                        changeView();
+                    }
+                }
 
             }   //event
         });
     }
+
+    private void changeView() {
+
+        //Change Question
+        String strQuestion = objMyValue.qurstionIshihara();
+        questionTextView.setText(strQuestion);
+
+        //Change Image
+        int intDrawable = objMyValue.ishiharaImage();
+        ishiharaImageView.setImageResource(intDrawable);
+
+        //Change Choice
+        int intTime = objMyValue.choiceValue();
+        String[] strChoice = getResources().getStringArray(intTime);
+        choice1RadioButton.setText(strChoice[0]);
+        choice2RadioButton.setText(strChoice[1]);
+        choice3RadioButton.setText(strChoice[2]);
+        choice4RadioButton.setText(strChoice[3]);
+        
+    }   // changeView
 
     private void soundEffect(int intSound) {
 
